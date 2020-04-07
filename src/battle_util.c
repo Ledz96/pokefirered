@@ -29,6 +29,11 @@
 #include "constants/battle_move_effects.h"
 #include "constants/battle_script_commands.h"
 
+//TODO: Add other move categories
+
+/**
+ * List of sound-based moves.
+ */
 static const u16 sSoundMovesTable[] =
 {
     MOVE_GROWL, MOVE_ROAR, MOVE_SING, MOVE_SUPERSONIC, MOVE_SCREECH, MOVE_SNORE,
