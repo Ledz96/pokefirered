@@ -5,7 +5,10 @@
 #include "sprite.h"
 #include "constants/pokemon.h"
 
-struct PokemonSubstruct0
+/**
+ * Contains data about the Pokemon's species, held item, experience, friendship level and pps.
+ */
+struct PokemonSubstruct0    //TODO: Rename
 {
     u16 species;
     u16 heldItem;
@@ -14,13 +17,19 @@ struct PokemonSubstruct0
     u8 friendship;
 };
 
-struct PokemonSubstruct1
+/**
+ * Contains data about the Pokemon's currently known moves.
+ */
+struct PokemonSubstruct1    //TODO: Rename
 {
     u16 moves[4];
     u8 pp[4];
 };
 
-struct PokemonSubstruct2
+/**
+ * Contains data about the Pokemon's EVs and contest stats. 
+ */
+struct PokemonSubstruct2    //TODO: Rename
 {
     u8 hpEV;
     u8 attackEV;
@@ -36,11 +45,14 @@ struct PokemonSubstruct2
     u8 sheen;
 };
 
+/**
+ * Contains data about the Pokemon's catch-encounter infos, IVs, ability, ribbons and obedience.
+ */
 struct PokemonSubstruct3
 {
  /* 0x00 */ u8 pokerus;
- /* 0x01 */ u8 metLocation;
 
+ /* 0x01 */ u8 metLocation;
  /* 0x02 */ u16 metLevel:7;
  /* 0x02 */ u16 metGame:4;
  /* 0x03 */ u16 pokeball:4;
@@ -103,6 +115,9 @@ struct BoxPokemon
     u16 checksum;
     u16 unknown;
 
+    /**
+     * Union used for Pokemon encryption, decryption and checksum calculation.
+     */
     union
     {
         u32 raw[12];
