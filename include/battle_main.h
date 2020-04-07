@@ -31,6 +31,9 @@ struct UnknownPokemonStruct4
 #define TYPE_EFFECT_DEF_TYPE(i)((gTypeEffectiveness[i + 1]))
 #define TYPE_EFFECT_MULTIPLIER(i)((gTypeEffectiveness[i + 2]))
 
+//define for the gTypeEffectiveness table size
+#define NUMBER_OF_TYPE_INTERACTIONS 369
+
 // defines for the gTypeEffectiveness multipliers
 #define TYPE_MUL_NO_EFFECT          0
 #define TYPE_MUL_NOT_EFFECTIVE      5
@@ -57,7 +60,7 @@ extern const u8 gStatusConditionString_IceJpn[8];
 extern const u8 gStatusConditionString_ConfusionJpn[8];
 extern const u8 gStatusConditionString_LoveJpn[8];
 extern const u8 *const gStatusConditionStringsTable[7][2];
-extern const u8 gTypeEffectiveness[336];
+extern const u8 gTypeEffectiveness[NUMBER_OF_TYPE_INTERACTIONS];
 extern const struct TrainerMoney gTrainerMoneyTable[];
 extern const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT];
 extern const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1];
