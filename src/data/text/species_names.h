@@ -1,4 +1,5 @@
-const u8 gSpeciesNames[][11] = {
+//TODO: Decapitalize
+const u8 gSpeciesNames[][POKEMON_NAME_LENGTH + 1] = { //Was 11 
     _("??????????"),
     _("BULBASAUR"),
     _("IVYSAUR"),
