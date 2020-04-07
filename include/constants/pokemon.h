@@ -102,7 +102,7 @@
 #define TYPE_BUG      0x06
 #define TYPE_GHOST    0x07
 #define TYPE_STEEL    0x08
-#define TYPE_MYSTERY  0x09
+#define TYPE_MYSTERY  0x09      //TODO: Delete type mystery, fix Curse (Ghost), Eggs (Normal)
 #define TYPE_FIRE     0x0a
 #define TYPE_WATER    0x0b
 #define TYPE_GRASS    0x0c
@@ -111,7 +111,8 @@
 #define TYPE_ICE      0x0f
 #define TYPE_DRAGON   0x10
 #define TYPE_DARK     0x11
-#define NUMBER_OF_MON_TYPES     0x12
+#define TYPE_FAIRY    0x12
+#define NUMBER_OF_MON_TYPES     0x13
 
 // Pokemon egg groups
 #define EGG_GROUP_NONE 0
@@ -174,7 +175,7 @@
 #define NUM_BATTLE_STATS 8
 
 // Shiny odds
-#define SHINY_ODDS 8 // Actual probability is SHINY_ODDS/65536
+#define SHINY_ODDS 16 // Actual probability is SHINY_ODDS/65536. Was 8 before.
 
 // Learning moves
 #define MON_ALREADY_KNOWS_MOVE 0xFFFE
