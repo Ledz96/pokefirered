@@ -112,13 +112,13 @@
 
 // Volatile status ailments
 // These are removed after exiting the battle or switching out
-#define STATUS2_CONFUSION             0x00000007
+#define STATUS2_CONFUSION             0x00000007  // 4 bits: 0x1, 0x2, 0x4. Confusion lasts a maximum of four turns (?)
 #define STATUS2_FLINCHED              0x00000008
 #define STATUS2_UPROAR                0x00000070
-#define STATUS2_BIDE                  0x00000300  // two bits 0x100, 0x200
-#define STATUS2_LOCK_CONFUSE          0x00000C00
+#define STATUS2_BIDE                  0x00000300  // 2 bits: 0x100, 0x200
+#define STATUS2_LOCK_CONFUSE          0x00000C00  // 2 bits: 0x400, 0x800
 #define STATUS2_MULTIPLETURNS         0x00001000
-#define STATUS2_WRAPPED               0x0000E000
+#define STATUS2_WRAPPED               0x0000E000  // 3 bits: 0x2000, 0x4000, 0x8000
 #define STATUS2_INFATUATION           0x000F0000  // 4 bits, one for every battler
 #define STATUS2_INFATUATED_WITH(battler) (gBitTable[battler] << 16)
 #define STATUS2_FOCUS_ENERGY          0x00100000
@@ -204,10 +204,11 @@
 #define MOVE_RESULT_FOE_HUNG_ON        (1 << 7)
 #define MOVE_RESULT_NO_EFFECT          (MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE | MOVE_RESULT_FAILED)
 
+//TODO: Add new weathers (Extremely harsh sunlight, Heavy rain, Strong winds)
 // Battle Weather flags
 #define WEATHER_RAIN_TEMPORARY      (1 << 0)
 #define WEATHER_RAIN_DOWNPOUR       (1 << 1)  // unused
-#define WEATHER_RAIN_PERMANENT      (1 << 2)
+#define WEATHER_RAIN_PERMANENT      (1 << 2)  // Delete
 #define WEATHER_RAIN_ANY            (WEATHER_RAIN_TEMPORARY | WEATHER_RAIN_DOWNPOUR | WEATHER_RAIN_PERMANENT)
 #define WEATHER_SANDSTORM_TEMPORARY (1 << 3)
 #define WEATHER_SANDSTORM_PERMANENT (1 << 4)
