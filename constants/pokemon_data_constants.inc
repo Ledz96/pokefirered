@@ -76,3 +76,12 @@
 	.set EVO_LEVEL_NINJASK,    0x000d @ Pokémon reaches the specified level (special value for Ninjask)
 	.set EVO_LEVEL_SHEDINJA,   0x000e @ Pokémon reaches the specified level (special value for Shedinja)
 	.set EVO_BEAUTY,           0x000f @ Pokémon levels up with beauty ≥ specified value
+	.set EVO_MOVE			   0x0010 @ Pokémon levels up knowing a specified move
+	.set EVO_SYLVEON	       0x0011 @ Pokémon levels up knowing a fairy type move and with friendship >= 200
+	.set EVO_LOCATION		   0x0012 @ Pokémon levels up in a specified location
+	.set EVO_LEVEL_DAY		   0x0013 @ Pokémon reaches the specified level during the day
+	.set EVO_LEVEL_NIGHT	   0x0014 @ Pokémon reaches the specified level during the night
+	.set EVO_LEVEL_ITEM_DAY    0x0015 @ Pokémon reaches the specified level while holding a specified item during the day
+	.set EVO_LEVEL_ITEM_NIGHT  0x0015 @ Pokémon of the specified gender reaches the specified level while holding a specified item during the night
+	.set EVO_LEVEL_GENDER	   0x0016 @ Pokémon of the specified gender reaches the specified level
+	.set EVO_ITEM_GENDER	   0x0017 @ specified item is used on Pokémon of the specified gender
