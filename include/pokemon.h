@@ -88,6 +88,10 @@ struct PokemonSubstruct3
  /* 0x0B */ u32 obedient:1;
 };
 
+/**
+ * Union used to collect the four Pokemon Substructs.
+ * Contains four 12-bytes PokemonSubstruct, one per type, and an array raw of 6 u16 (12-bytes) for encryption
+ */
 union PokemonSubstruct
 {
     struct PokemonSubstruct0 type0;
@@ -117,6 +121,7 @@ struct BoxPokemon
 
     /**
      * Union used for Pokemon encryption, decryption and checksum calculation.
+     * Contains an array of 4 12-bytes substructures (48 bytes), and an array raw of 12 u32 (48 bytes) for encryption. 
      */
     union
     {
@@ -212,7 +217,7 @@ struct BattlePokemon
     /*0x2E*/ u16 item;
     /*0x30*/ u8 nickname[POKEMON_NAME_LENGTH + 1];
     /*0x3B*/ u8 ppBonuses;
-    /*0x3C*/ u8 otName[8];
+    /*0x3C*/ u8 otName[OT_NAME_LENGTH + 1];      //Was 8
     /*0x44*/ u32 experience;
     /*0x48*/ u32 personality;
     /*0x4C*/ u32 status1;
