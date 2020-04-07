@@ -46,6 +46,9 @@
 // Extracts the lower 16 bits of a 32-bit number
 #define LOHALF(n) ((n) & 0xFFFF)
 
+/**
+ * Defines an index based on Species or Hoenn ID; fills that position of an array with the specified index.
+ */
 #define SPECIES_TO_HOENN(name)      [SPECIES_##name - 1] = HOENN_DEX_##name
 #define SPECIES_TO_NATIONAL(name)   [SPECIES_##name - 1] = NATIONAL_DEX_##name
 #define HOENN_TO_NATIONAL(name)     [HOENN_DEX_##name - 1] = NATIONAL_DEX_##name
@@ -1360,6 +1363,11 @@ static const struct SpindaSpot sSpindaSpotGraphics[] =
 
 #include "data/pokemon/item_effects.h"
 
+/**
+ * Defines stat gains and loss for each nature.
+ * One row per nature, one column per stat. 
+ * For each nature, a stat's value may be 1, 0 or -1.
+ */
 static const s8 sNatureStatTable[][5] =
 {
     // Atk Def Spd Sp.Atk Sp.Def
@@ -1610,12 +1618,14 @@ static const s8 sFriendshipEventDeltas[][3] =
     {-5, -5, -10 },
 };
 
+//TODO: Delete HMs
 static const u16 sHMMoves[] = 
 {
     MOVE_CUT, MOVE_FLY, MOVE_SURF, MOVE_STRENGTH, MOVE_FLASH,
     MOVE_ROCK_SMASH, MOVE_WATERFALL, MOVE_DIVE, 0xFFFF
 };
 
+//TODO: Make all deoxis forms available
 #if defined(FIRERED)
 static const u16 sDeoxysBaseStats[] = 
 {
@@ -1674,6 +1684,11 @@ static const struct SpriteTemplate sOakSpeechNidoranFDummyTemplate =
 };
 
 // code
+
+/**
+ * Initializes all fields of a struct BoxPokemon variable to 0.
+ * @param boxMon: a pointer to the struct BoxPokemon variable that has to be initialized to 0 
+ */
 void ZeroBoxMonData(struct BoxPokemon *boxMon)
 {
     u8 *raw = (u8 *)boxMon;
@@ -1682,6 +1697,10 @@ void ZeroBoxMonData(struct BoxPokemon *boxMon)
         raw[i] = 0;
 }
 
+/**
+ * Initializes all fields of a struct Pokemon variable to 0.
+ * @param mon: a pointer to the struct Pokemon variable that has to be initialized to 0 
+ */
 void ZeroMonData(struct Pokemon *mon)
 {
     u32 arg;
@@ -1700,6 +1719,9 @@ void ZeroMonData(struct Pokemon *mon)
     SetMonData(mon, MON_DATA_MAIL, &arg);
 }
 
+/**
+ * Fills the player's party with empty Pokemons.
+ */ 
 void ZeroPlayerPartyMons(void)
 {
     s32 i;
@@ -1707,6 +1729,9 @@ void ZeroPlayerPartyMons(void)
         ZeroMonData(&gPlayerParty[i]);
 }
 
+/**
+ * Fills the opponent's party with empty Pokemons.
+ */ 
 void ZeroEnemyPartyMons(void)
 {
     s32 i;
@@ -1725,15 +1750,27 @@ void CreateMon(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 hasFix
     CalculateMonStats(mon);
 }
 
+/**
+ * Creates a Box Pokemon by setting the members of the struct to the specified values.
+ * @par boxMon: a pointer to the struct BoxPokemon variable that contains the created pokemon.
+ * @par species: the species of the pokemon.
+ * @par fixedIV: ?
+ * @par hasFixedPersonality: boolean that checks if the pokemon's personality has to be randomly generated or not.
+ * @par fixedPersonality: personality of the pokemon, if it is fixed (already existent).
+ * @par otIdType: specifies if the OT ID for the pokemon has to be randomly generated, it is of a known trainer, or it is the player's.
+ * @par fixedOtId: OT ID of the pokemon, if it is fixed (already existent).
+ */
 void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId)
 {
     u8 speciesName[POKEMON_NAME_LENGTH + 1];
-    u32 personality;
-    u32 value;
+    u32 personality;                                //Contains the personality of the pokemon
+    u32 value;                                      //Contains the OT ID of the pokemon
     u16 checksum;
 
+    //Start from empty boxPokemon
     ZeroBoxMonData(boxMon);
 
+    //Set personality
     if (hasFixedPersonality)
         personality = fixedPersonality;
     else
@@ -1741,15 +1778,16 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
 
     SetBoxMonData(boxMon, MON_DATA_PERSONALITY, &personality);
 
-    //Determine original trainer ID
-    if (otIdType == OT_ID_RANDOM_NO_SHINY) //Pokemon cannot be shiny
+    //Determine ands set original trainer ID
+    if (otIdType == OT_ID_RANDOM_NO_SHINY) //Pokemon cannot be shiny. For NPCs, most likely.
     {
+        //Makes sure that the pokemon is not shiny
         u32 shinyValue;
         do
         {
             value = Random32();
             shinyValue = HIHALF(value) ^ LOHALF(value) ^ HIHALF(personality) ^ LOHALF(personality);
-        } while (shinyValue < 8);
+        } while (shinyValue < SHINY_ODDS);      //Was < 8
     }
     else if (otIdType == OT_ID_PRESET) //Pokemon has a preset OT ID
     {
@@ -1762,12 +1800,14 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
               | (gSaveBlock2Ptr->playerTrainerId[2] << 16)
               | (gSaveBlock2Ptr->playerTrainerId[3] << 24);
     }
-
     SetBoxMonData(boxMon, MON_DATA_OT_ID, &value);
 
-    checksum = CalculateBoxMonChecksum(boxMon);
-    SetBoxMonData(boxMon, MON_DATA_CHECKSUM, &checksum);
+    //TODO: Delete or improve checksum calculation and encryption
+    //Calculates the checksum (based on OT ID and personality only) and stores it into the pokemon
+    checksum = CalculateBoxMonChecksum(boxMon);       
+    SetBoxMonData(boxMon, MON_DATA_CHECKSUM, &checksum);    
     EncryptBoxMon(boxMon);
+
     GetSpeciesName(speciesName, species);
     SetBoxMonData(boxMon, MON_DATA_NICKNAME, speciesName);
     SetBoxMonData(boxMon, MON_DATA_LANGUAGE, &gGameLanguage);
@@ -2028,6 +2068,10 @@ void sub_803E23C(struct Pokemon *mon, struct BattleTowerPokemon *dest)
     GetMonData(mon, MON_DATA_NICKNAME, dest->nickname);
 }
 
+/**
+ * Calculates a checksum for a pokemon based on its encrypted data (raw) in 4 different substruct.
+ * @param boxMon: pointer to the BoxPokemon struct the checksum is calculated upon.
+ */
 static u16 CalculateBoxMonChecksum(struct BoxPokemon *boxMon)
 {
     u16 checksum = 0;
@@ -2037,6 +2081,7 @@ static u16 CalculateBoxMonChecksum(struct BoxPokemon *boxMon)
     union PokemonSubstruct *substruct3 = GetSubstruct(boxMon, boxMon->personality, 3);
     s32 i;
 
+    //TODO: might be a single loop to avoid wasting computation
     for (i = 0; i < 6; i++)
         checksum += substruct0->raw[i];
 
@@ -2746,6 +2791,11 @@ void SetMultiuseSpriteTemplateToTrainerBack(u16 trainerSpriteId, u8 battlerPosit
     }
 }
 
+/**
+ * Encrypts the BoxMon data into the raw field, using OT ID and personality.
+ * The encryption is a simple XOR between OT ID and personality (since the original value of raw is 0).
+ * @param boxMon: pointer to the struct BoxPokemon that has to be encrypted.
+ */
 static void EncryptBoxMon(struct BoxPokemon *boxMon)
 {
     u32 i;
@@ -2756,6 +2806,11 @@ static void EncryptBoxMon(struct BoxPokemon *boxMon)
     }
 }
 
+/**
+ * Decrypts the BoxMon data into the raw field, using OT ID and personality.
+ * The decryption is a simple XOR between raw and OT ID first, personality second (look at how the encryption happens).
+ * @param boxMon: pointer to the struct BoxPokemon that has to be encrypted.
+ */
 static void DecryptBoxMon(struct BoxPokemon *boxMon)
 {
     u32 i;
@@ -2812,10 +2867,22 @@ case n:                                                                 \
         break;                                                          \
     }                                                                   \
 
+/**
+ * Returns a substruct based on the Pokemon's personality and the required substruct type.
+ * @param boxMon: pointer to a BoxPokemon struct that represents the pokemon to retrieve the substruct from.
+ * @param personality: personality of the pokemon.
+ * @param substructType: type of the substruct to retrieve. In a (0,3) range (extremes included).
+ */
 static union PokemonSubstruct *GetSubstruct(struct BoxPokemon *boxMon, u32 personality, u8 substructType)
 {
     union PokemonSubstruct *substruct = NULL;
 
+    /**
+     * Each Pokemon contains a secure field with 4 substructs. 
+     * Personality % 24 is used to determine which of the 4! permutation of {0,1,2,3} must be used to access the correct substruct from the array in BoxPokemon::secure.
+     * The used permutation represents the order in which the different substructs are stored in the array. This is based on personality.
+     * This is done for security reasons.
+     */
     switch (personality % 24)
     {
         SUBSTRUCT_CASE( 0,0,1,2,3)
@@ -2847,10 +2914,17 @@ static union PokemonSubstruct *GetSubstruct(struct BoxPokemon *boxMon, u32 perso
     return substruct;
 }
 
+/**
+ * Retrieves a byte-long field from a struct Pokemon, loading it in data.
+ * @param mon: pointer to the struct Pokemon that contains the data to retrieve.
+ * @param field: field that has to be retrieved.
+ * @param data: variable that will store the retrieved data. 
+ */
 u32 GetMonData(struct Pokemon *mon, s32 field, u8* data)
 {
     u32 ret;
 
+    //TODO: Overhaul Deoxys mechanics
     switch (field)
     {
     case MON_DATA_STATUS:
@@ -2865,7 +2939,7 @@ u32 GetMonData(struct Pokemon *mon, s32 field, u8* data)
     case MON_DATA_MAX_HP:
         ret = mon->maxHP;
         break;
-    case MON_DATA_ATK:
+    case MON_DATA_ATK:                         
         ret = GetDeoxysStat(mon, STAT_ATK);
         if (!ret)
             ret = mon->attack;
@@ -3271,6 +3345,13 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
 #define SET16(lhs) (lhs) = data[0] + (data[1] << 8)
 #define SET32(lhs) (lhs) = data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24)
 
+/**
+ * Assigns a given value to a specified field of a struct Pokemon variable.
+ * @param mon: a pointer to the struct Pokemon variable to modify.
+ * @param field: the field to modify.
+ * @param dataArg: a void pointer that represents the value to assign. Since different data types might be passed, the parameter is assigned to a void*.
+ * No check is performed before dereferencing the pointer. Correct data size (corresponding to the field) is assumed.
+ */
 void SetMonData(struct Pokemon *mon, s32 field, const void *dataArg)
 {
     const u8 *data = dataArg;
@@ -3339,6 +3420,13 @@ void SetMonData(struct Pokemon *mon, s32 field, const void *dataArg)
     }
 }
 
+/**
+ * Assigns a given value to a specified field of a struct BoxPokemon variable.
+ * @param mon: a pointer to the struct BoxPokemon variable to modify.
+ * @param field: the field to modify.
+ * @param dataArg: a void pointer that represents the value to assign. Since different data types might be passed, the parameter is assigned to a void*.
+ * No check is performed before dereferencing the pointer. Correct data size (corresponding to the field) is assumed.
+ */
 void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
 {
     const u8 *data = dataArg;
