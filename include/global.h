@@ -174,7 +174,7 @@ struct BerryCrush
     u32 unk;
 };
 
-#define PLAYER_NAME_LENGTH   7
+#define PLAYER_NAME_LENGTH   15      //Was 7
 
 #define LINK_B_RECORDS_COUNT 5
 
