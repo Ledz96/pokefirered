@@ -30,8 +30,8 @@
 
 
 #define POKEMON_SLOTS_NUMBER 412
-#define POKEMON_NAME_LENGTH 12      //Was 10
-#define OT_NAME_LENGTH 15           //Was 7
+#define POKEMON_NAME_LENGTH 10      //Was 10
+#define OT_NAME_LENGTH 7           //Was 7
 
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define max(a, b) ((a) >= (b) ? (a) : (b))
