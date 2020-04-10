@@ -75,6 +75,7 @@ static void ListMenuDrawCursor(struct ListMenu *list);
 static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit);
 static u8 ListMenuAddCursorObject(struct ListMenu *list, u32 cursorKind);
 
+/*
 const struct MoveMenuInfoIcon gMoveMenuInfoIcons[] =
 {
     { 12, 12, 0x00 },       // Unused
@@ -101,7 +102,7 @@ const struct MoveMenuInfoIcon gMoveMenuInfoIcons[] =
     { 40, 12, 0xC8 },       // -Accuracy- icon
     { 40, 12, 0xE0 },       // -PP- icon
     { 40, 12, 0xE8 },       // -Effect- icon
-};
+};*/
 
 static void ListMenuDummyTask(u8 taskId)
 {
@@ -761,6 +762,11 @@ void sub_8107CF8(u8 windowId, u16 speciesId, u32 personality, u16 x, u16 y)
     BlitBitmapToWindow(windowId, GetMonIconPtr(speciesId, personality, 1), x, y, 32, 32);
 }
 
+/**
+ * Loads palette for a menu.
+ * @param palOffset: offset of the palette to load.
+ * @param palId: id of the palette to load. 0 loads the pokeball palette, 1 loads the type palette. 
+ */
 void ListMenuLoadStdPalAt(u8 palOffset, u8 palId)
 {
     const u16 *palette;
@@ -769,10 +775,12 @@ void ListMenuLoadStdPalAt(u8 palOffset, u8 palId)
     {
     case 0:
     default:
-        palette = gFireRedMenuElements1_Pal;
+       // palette = gFireRedMenuElements1_Pal;
+        palette = gPokeballSymbol_Pal;
         break;
     case 1:
-        palette = gFireRedMenuElements2_Pal;
+//        palette = gFireRedMenuElements2_Pal;
+        palette = gFireRedTypes_Pal[0];
         break;
     }
     LoadPalette(palette, palOffset, 0x20);
@@ -780,5 +788,9 @@ void ListMenuLoadStdPalAt(u8 palOffset, u8 palId)
 
 void BlitMoveInfoIcon(u8 windowId, u8 iconId, u16 x, u16 y)
 {
-    BlitBitmapRectToWindow(windowId, gFireRedMenuElements_Gfx + gMoveMenuInfoIcons[iconId].offset * 32, 0, 0, 128, 128, x, y, gMoveMenuInfoIcons[iconId].width, gMoveMenuInfoIcons[iconId].height);
+    //BlitBitmapRectToWindow(windowId, gFireRedMenuElements_Gfx + gMoveMenuInfoIcons[iconId].offset * 32, 0, 0, 128, 128, x, y, gMoveMenuInfoIcons[iconId].width, gMoveMenuInfoIcons[iconId].height);
+    if (iconId == 0 )
+        BlitBitmapRectToWindow(windowId, gPokeballSymbol_Gfx, 0, 0, 16, 16, x, y, 12, 12);
+    else
+        BlitBitmapRectToWindow(windowId, gFireRedTypes_Gfx, 0, 0, 32, 16, x, y, TYPE_ICON_WIDTH, TYPE_ICON_HEIGHT);
 }

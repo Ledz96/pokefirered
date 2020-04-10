@@ -2745,9 +2745,17 @@ extern const u32 gTrainerPalette_RuinManiac[];
 extern const u32 gTrainerPalette_Lady[];
 extern const u32 gTrainerPalette_Painter[];
 
-extern const u8 gFireRedMenuElements_Gfx[];
-extern const u16 gFireRedMenuElements1_Pal[];
-extern const u16 gFireRedMenuElements2_Pal[];
+//extern const u8 gFireRedMenuElements_Gfx[];
+//extern const u16 gFireRedMenuElements1_Pal[];
+//extern const u16 gFireRedMenuElements2_Pal[];
+
+extern const u8 gFireRedTypes_Gfx[];
+extern const u8 gPokeballSymbol_Gfx[];
+extern const u16 gFireRedTypes_Pal[][NUMBER_OF_MON_TYPES];
+extern const u16 gPokeballSymbol_Pal[];
+
+#define TYPE_ICON_WIDTH     32
+#define TYPE_ICON_HEIGHT    12
 
 extern const u8 gItemIcon_QuestionMark[];
 extern const u8 gItemIconPalette_QuestionMark[];

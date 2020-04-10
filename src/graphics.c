@@ -1172,9 +1172,59 @@ const u32 gGhostFrontPic[] = INCBIN_U32("graphics/pokemon/ghost/front.4bpp.lz");
 
 #include "data/graphics/mail.h"
 
-const u16 gFireRedMenuElements1_Pal[] = INCBIN_U16("graphics/interface/dex_caught_pokeball.gbapal");
-const u16 gFireRedMenuElements2_Pal[] = INCBIN_U16("graphics/interface/pokemon_types.gbapal");
-const u8 gFireRedMenuElements_Gfx[] = INCBIN_U8("graphics/interface/dex_caught_pokeball_and_pokemon_types.4bpp");
+//const u16 gFireRedMenuElements1_Pal[] = INCBIN_U16("graphics/interface/dex_caught_pokeball.gbapal");
+//const u16 gFireRedMenuElements2_Pal[] = INCBIN_U16("graphics/interface/pokemon_types.gbapal");
+//const u8 gFireRedMenuElements_Gfx[] = INCBIN_U8("graphics/interface/dex_caught_pokeball_and_pokemon_types.4bpp");
+
+const u8 gFireRedTypes_Gfx[] = INCBIN_U8("graphics/type_icons/normal_big.4bpp");
+
+/*const u8 gFireRedTypes_Gfx[][1] = 
+{
+    INCBIN_U8("graphics/type_icons/normal_big.4bpp"),
+    INCBIN_U8("graphics/type_icons/fighting.4bpp"),
+    INCBIN_U8("graphics/type_icons/flying.4bpp"),
+    INCBIN_U8("graphics/type_icons/poison.4bpp"),
+    INCBIN_U8("graphics/type_icons/ground.4bpp"),
+    INCBIN_U8("graphics/type_icons/rock.4bpp"),
+    INCBIN_U8("graphics/type_icons/bug.4bpp"),
+    INCBIN_U8("graphics/type_icons/ghost.4bpp"),
+    INCBIN_U8("graphics/type_icons/steel.4bpp"),
+    INCBIN_U8("graphics/type_icons/mystery.4bpp"),
+    INCBIN_U8("graphics/type_icons/fire.4bpp"),
+    INCBIN_U8("graphics/type_icons/water.4bpp"),
+    INCBIN_U8("graphics/type_icons/grass.4bpp"),
+    INCBIN_U8("graphics/type_icons/electric.4bpp"),
+    INCBIN_U8("graphics/type_icons/psychic.4bpp"),
+    INCBIN_U8("graphics/type_icons/ice.4bpp"),
+    INCBIN_U8("graphics/type_icons/dragon.4bpp"),
+    INCBIN_U8("graphics/type_icons/dark.4bpp"),
+    INCBIN_U8("graphics/type_icons/fairy.4bpp"),
+};*/
+
+const u16 gFireRedTypes_Pal[][NUMBER_OF_MON_TYPES] = 
+{
+    INCBIN_U16("graphics/type_icons/normal_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/fighting_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/flying_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/poison_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/ground_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/rock_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/bug_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/ghost_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/steel_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/mystery_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/fire_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/water_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/grass_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/electric_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/psychic_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/ice_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/dragon_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/dark_palette.gbapal"),
+    INCBIN_U16("graphics/type_icons/fairy_palette.gbapal"),
+};
+const u8 gPokeballSymbol_Gfx[] = INCBIN_U8("graphics/interface/pokeball_icon_big.4bpp");
+const u16 gPokeballSymbol_Pal[] = INCBIN_U16("graphics/interface/pokeball_icon_palette.gbapal");
 
 const u16 gUnknown_8E97DDC[] = INCBIN_U16("graphics/interface/learn_move.gbapal");
 const u32 gUnknown_8E97DFC[] = INCBIN_U32("graphics/interface/learn_move.4bpp.lz");
